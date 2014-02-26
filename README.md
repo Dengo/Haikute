@@ -5,7 +5,7 @@ Haikute
 
 Our immediate goals:
 
-- Use NLTK to study the syllabic structures of haikus provided in Project Guttenberg (machine learning)
+- Use NLTK to study the syllabic structures of haikus provided in Project Gutenberg (machine learning)
 - Pull phonetic transciptions and lexical entries from the Carnegie Mellon University Pronouncing Dictionary 
 - Create a basic syllabification algorithm for Englsih
 - Create a framework-less application to house the haiku generator 
