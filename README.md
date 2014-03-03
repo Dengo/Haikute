@@ -1,5 +1,8 @@
 Haikute 
 =======
+Stephen Babineau
+Mark Charyk
+Naomi Shapiro
 
 "Haikute" is our attempt at a haiku generator that will incorporate various libraries from the Natural Language Toolkit in its functionality. 
 
