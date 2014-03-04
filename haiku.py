@@ -1,5 +1,5 @@
 import random
-from our_dict import naomis_dict
+from test_dict import naomis_dict
 
 paradigms = [
     ["NP", "TP", "NP"],

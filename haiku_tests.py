@@ -1,6 +1,6 @@
 import unittest
 import haiku
-from our_dict import naomis_dict
+from test_dict import naomis_dict
 
 
 class testHaiku(unittest.TestCase):
