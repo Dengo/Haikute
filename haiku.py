@@ -58,8 +58,8 @@ class Haiku(object):
             line = random.choice(phrase_dict[p])
             self.string_line = ''
             for w in line:
-                self.string_line += "%s " % random.choice(naomis_dict[w])
-            self.result += "%s\n" % self.string_line[:-1]
+                self.string_line += " %s" % random.choice(naomis_dict[w])
+            self.result += "%s\n" % self.string_line[1:]
 
     def __str__(self):
         return self.result
