@@ -4,7 +4,7 @@ def application(environ, start_response):
         path = environ.get('PATH_INFO', None)
         if path is None:
             raise NameError
-        with open("static/haikute_page.html", 'r') as infile:
+        with open("templates/haikute_page.html", 'r') as infile:
             body = infile.read()
         status = "200 OK"
     except NameError:
