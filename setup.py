@@ -19,7 +19,7 @@ setup(
                   'tien_ralter@hotmail.com',
                   ],
     license='MIT',
-    packages=[],
+    packages=['haikute'],
     install_requires=['PyYAML >= 3.10',
                       'argparse >= 1.2.1',
                       'gunicorn >= 18.0',
