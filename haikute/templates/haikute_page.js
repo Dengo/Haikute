@@ -1,20 +1,39 @@
 $(document).ready(function () {
     $('button').on('click', function() {
-        var haiku = $(this).closest('body').find('p');;
+        var haiku = $(this).closest('#current-haiku').find('p');;
         $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8000/haiku_text_page.html',
-            data: 'Please remit haiku post haste',
+            type: 'GET',
+            url: '/haiku',
+            //data: 'Please remit haiku post haste',
             dataType: 'json',
             success: function(response) {
                 haiku.remove();
                 var hk = $("<p></p>");
                 hk.append(response);
-                $('body').hide().html(haiku).fadeIn();
+                $('body').html(haiku);
             },
             error: function(request, errorType, errorMessage) {
                 alert('Error: ' + request + ' with message ' + errorMessage);
             },
         });
     });
-})
+
+    var longPoll = function() {
+        return $.ajax({
+            type: 'GET',
+            url: '/haiqueue',
+            async: true,
+            cache: false,
+            timeout: 10000,
+            success: function(response) {
+                if (response.length > 0) {
+                    $('#prev-haikus').append($('<li>'+response+'</li>'))
+                }
+                return longPoll();
+            },
+            dataType: 'json'
+        });
+    };
+
+    longPoll();
+});
