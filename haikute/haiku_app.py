@@ -33,14 +33,17 @@ def model_app(environ, start_response):
     try:
         if path is None:
             raise NameError
-        elif path is '':
+        elif path is '/':
             headers = [("Content-type", "text/html")]
             with open(("templates/haikute_page.html"), 'r') as infile:
                 body = infile.read()
-        elif path is 'haiku':
+        elif "templates" in path:
+            with open((path), 'r') as infile:
+                body = infile.read()
+        elif path is '/haiku':
             headers[0] = ("Content-type", "text/json")
             body = json.dump(generate_haiku())
-        elif path is 'haiqueue':
+        elif path is '/haiqueue':
             headers[0] = ("Content-type", "text/json")
             body = json.dump(get_haiku_list())
         else:
