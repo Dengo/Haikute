@@ -5,7 +5,7 @@
 paradigms = [
             ["NP", "TP", "NP"],
             ["PP", "TP", "NP"],
-            ["NP", "TransTP", "NP"]
+# ["NP", "TransTP", "NP"]
 ]
 
 # NN = singular/mass common nouns... [NN1, NN2, NN3, NN4, NN5]
@@ -53,16 +53,16 @@ NPs = [
 
 PPs = [
       ["P1", "D1", "ADJ1", "NN2"],  # singular
-      ["P1", "D1", "ADJ1", "ADJ1," "NN1"],
-      ["P1", "D1", "ADV1", "ADJ1," "NN1"],
+      ["P1", "D1", "ADJ1", "ADJ1", "NN1"],
+      ["P1", "D1", "ADV1", "ADJ1", "NN1"],
       ["P2", "D1", "ADJ1", "NN1"],
     # ["P2", "ADJ2", "NN1"],
     # ["P1", "ADJ2", "NN2"],
       ["P1", "D1", "NN3"],
       ["P1", "DS1", "ADJ1", "NNS2"],  # plural
-      ["P1", "DS1", "ADJ1", "ADJ1," "NNS1"],
-      ["P1", "ADV2", "ADJ1," "NNS1"],
-      ["P1", "ADJ3," "NNS1"],
+      ["P1", "DS1", "ADJ1", "ADJ1", "NNS1"],
+      ["P1", "ADV2", "ADJ1", "NNS1"],
+      ["P1", "ADJ3", "NNS1"],
       ["P2", "DS1", "ADJ1", "NNS1"],
       ["P2", "ADJ2", "NNS1"],
       ["P1", "ADJ2", "NNS2"],
