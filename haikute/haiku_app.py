@@ -29,23 +29,16 @@ haistorage = deque(maxlen=5)
 def model_app(environ, start_response):
     # method = environ.get('REQUEST_METHOD')
     path = environ.get('PATH_INFO', None)
-    # if method == "GET":
+    headers = []
     try:
         if path is None:
             raise NameError
-        elif path is '/':
-            headers = [("Content-type", "text/html")]
-            with open(("templates/haikute_page.html"), 'r') as infile:
-                body = infile.read()
-        elif "templates" in path:
-            with open((path), 'r') as infile:
-                body = infile.read()
-        elif path is '/haiku':
-            headers[0] = ("Content-type", "text/json")
-            body = json.dump(generate_haiku())
-        elif path is '/haiqueue':
-            headers[0] = ("Content-type", "text/json")
-            body = json.dump(get_haiku_list())
+        elif path == '/api/haiku':
+            headers = [("Content-type", "application/json")]
+            body = json.dumps(generate_haiku())
+        elif path == '/api/haiqueue':
+            headers = [("Content-type", "application/json")]
+            body = json.dumps(get_haiku_list())
         else:
             raise NameError
         status = "200 OK"
@@ -55,8 +48,10 @@ def model_app(environ, start_response):
     except:
         status = "500 Internal Server Error"
         body = "<h1>Internal Server Error</h1>"
-    headers.append(('Content-length', str(len(body))))
-    start_response(status, headers)
+    finally:
+        headers.append(('Content-length', str(len(body))))
+        start_response(status, headers)
+        return [body]
 
 
 def generate_haiku():
@@ -64,7 +59,7 @@ def generate_haiku():
 
 
 def get_haiku_list():
-    return {'haiqueue': 'I would be a list of haikus!'}
+    return {'haiqueue': ['I would be a list of haikus!', '1', '2', '3', '4']}
 
 
 if __name__ == '__main__':
