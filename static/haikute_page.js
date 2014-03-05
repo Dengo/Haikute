@@ -30,7 +30,7 @@ $(document).ready(function () {
             timeout: 10000,
             dataType: 'json',
             success: function(response) {
-                five_haikus = response.getJSONArray("haiqueue");
+                var five_haikus = response.getJSONArray("haiqueue");
                 if (five_haikus.getString(0) != $('#prev-haikus').find('li').first()) {
                     $('#prev-haikus').append($('<li>'+five_haikus.getString(0)+'</li>'));
                     $('#prev-haikus').append($('<li>'+five_haikus.getString(1)+'</li>'));
