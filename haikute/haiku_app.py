@@ -1,4 +1,5 @@
 from collections import deque
+from haiku import Haiku
 import json
 
 
@@ -55,12 +56,13 @@ def model_app(environ, start_response):
 
 
 def generate_haiku():
-    return {'haiku': 'I would be a haiku!'}
+    response = str(Haiku())
+    haistorage.appendleft(response)
+    return {'haiku': response}
 
 
 def get_haiku_list():
-    return {'haiqueue': ['I would be a list of haikus!', '1', '2', '3', '4']}
-
+    return {'haiqueue': list(haistorage)}
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
