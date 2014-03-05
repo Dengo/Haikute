@@ -27,38 +27,41 @@ haistorage = deque(maxlen=5)
 
 
 def model_app(environ, start_response):
-    headers = [{"Content-type", "text/json"}]
-    method = environ.get('REQUEST_METHOD')
+    # method = environ.get('REQUEST_METHOD')
     path = environ.get('PATH_INFO', None)
-    if method == "GET":
+    # if method == "GET":
+    try:
         if path is None:
             raise NameError
-        try:
+        elif path is '':
+            headers = [("Content-type", "text/html")]
             with open(("templates/haikute_page.html"), 'r') as infile:
                 body = infile.read()
-            status = '200 OK'
-        except:
-            pass
-    elif method == 'POST':
-        status = '200 OK'
-        if path == 'generate':
-            haiku = generate_haiku()
-            body = json.load(haiku)
-        elif path == 'api':
-            haikulist = get_haiku_list()
-            body = json.load(haikulist)
+        elif path is 'haiku':
+            headers[0] = ("Content-type", "text/json")
+            body = json.dump(generate_haiku())
+        elif path is 'haiqueue':
+            headers[0] = ("Content-type", "text/json")
+            body = json.dump(get_haiku_list())
         else:
-            raise Exception
+            raise NameError
+        status = "200 OK"
+    except NameError:
+        status = "404 Not Found"
+        body = "<h1>Not Found</h1>"
+    except:
+        status = "500 Internal Server Error"
+        body = "<h1>Internal Server Error</h1>"
     headers.append(('Content-length', str(len(body))))
     start_response(status, headers)
 
 
 def generate_haiku():
-    pass
+    return {'haiku': 'I would be a haiku!'}
 
 
 def get_haiku_list():
-    pass
+    return {'haiqueue': 'I would be a list of haikus!'}
 
 
 if __name__ == '__main__':
