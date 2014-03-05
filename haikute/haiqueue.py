@@ -1,28 +1,25 @@
 from gevent import queue
-import json
+from collections import deque
 
-
-class Haiqueue(object):
+class Haistorage(object):
 
     def __init__(self):
-        self.users = set()
-        self.haiku = []
+        self.haiku = deque(maxlen=5)
 
-    def backlog(self, size=5):
-        return self.haiku[:(-size-1):-1]
+    def backlog(self):
+        return self.haiku
 
     def add(self, haiku):
-        for user in self.users:
-            print(user)
-            user.queue.put_nowait(haiku)
-        self.messages.append(haiku)
+        self.haiku.appendleft(haiku)
 
+# stores haikus
+haistorage = Haistorage()
 
-class User(object):
+#contains command queue
+haiqueue = queue.Queue()
 
-    def __init__(self):
-        self.queue = queue.Queue()
-
-
-
-
+#when generated, haikus are added to command queue to be added to all ajax
+while True:
+    if haiqueue.empty():
+        break
+    haistorage.add(haiqueue.get())
