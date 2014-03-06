@@ -4,20 +4,15 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             url: '/api/haiku',
-            //data: 'Please remit haiku post haste',
             dataType: 'json',
             success: function(response) {
-                // console.log("The haiku request succeeded");
                 haiku.remove();
                 var hk = $("<p></p>");
-                hk.append(response.haiku);
+                hk.append(response.haiku).hide();
                 $('#current-haiku').prepend(hk);
+                hk.fadeIn(800);
             },
             error: function(request, errorType, errorMessage) {
-                // haiku.remove();
-                // var hk = $("<p></p>");
-                // hk.append("No haiku fetched!");
-                // $('#current-haiku').prepend(hk);
                 console.log("The haiku request failed");
             },
         });
@@ -32,19 +27,19 @@ $(document).ready(function () {
             timeout: 10000,
             dataType: 'json',
             success: function(response) {
-                // console.log("The haiqueue request succeeded");
-                console.log(response);
                 var five_haikus = response.haiqueue;
-                console.log(five_haikus);
-                if (five_haikus[0] != $('#prev-haikus').find('li').first()) {
-                    $('#prev-haikus').find('li').remove();
-                    $('#prev-haikus').append($('<li>'+five_haikus[0]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[1]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[2]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[3]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[4]+'</li>'));
+                var prev_haikus = $('#prev-haikus').find('li');
+                if (five_haikus[0] != prev_haikus.first().html()) {
+                    prev_haikus.remove();
+                    for(var i = 0; i < 5; i++) {
+                        if(five_haikus[i]) {
+                            $('#prev-haikus').hide().append($('<li>'+five_haikus[i]+'</li>')).slideDown(500);
+                        }
+                    }
                 }
-                setTimeout(longPoll, 10000);
+                else {
+                    console.log("Didn't fall through");
+                }
             },
             error: function(request, errorType, errorMessage) {
                 // $('#prev-haikus').find('li').remove();
@@ -55,4 +50,6 @@ $(document).ready(function () {
     };
 
     longPoll();
+    setInterval(longPoll, 15000);
+
 });
