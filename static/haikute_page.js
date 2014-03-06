@@ -29,22 +29,21 @@ $(document).ready(function () {
             dataType: 'json',
             success: function(response) {
                 var five_haikus = response.haiqueue;
-                var prev_haikus = $('#prev-haikus').find('li');
-                if (five_haikus[0] != prev_haikus.first().html()) {
-                    prev_haikus.remove();
-                    for(var i = 0; i < 5; i++) {
-                        if(five_haikus[i]) {
-                            $('#prev-haikus').hide().append($('<li>'+five_haikus[i]+'</li>')).slideDown(500);
-                        }
+                var prev_haikus = $('#prev-haikus').find('p');
+                var num_new = 5;
+                // Determine how many new haikus have been passed back
+                for(var i = 0; i < 5; i++) {
+                    if(five_haikus[i] == prev_haikus.first().html()) {
+                        num_new = i;
                     }
                 }
-                else {
-                    console.log("Didn't fall through");
+                // Prepand that many haikus to the front of #prev-haikus
+                for(var i = num_new - 1; i >= 0; i--) {
+                    $('#prev-haikus').prepend($('<p>'+five_haikus[i]+'</p>')).slideDown(500);
+                    prev_haikus.last().remove();
                 }
             },
             error: function(request, errorType, errorMessage) {
-                // $('#prev-haikus').find('li').remove();
-                // $('#prev-haikus').append($('<li>'+'No previous haikus found!'+'</li>'));
                 console.log("The haiqueue request failed");
             },
         });
