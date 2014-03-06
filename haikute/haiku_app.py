@@ -1,30 +1,11 @@
 from collections import deque
+from gevent.queue import Queue
 from haiku import Haiku
 import json
 
 
 haistorage = deque(maxlen=5)
-
-
-# def application(environ, start_response):
-#     headers = [("Content-type", "text/html")]
-#     try:
-#         path = environ.get('PATH_INFO', None)
-#         if path is None:
-#             raise NameError
-#         with open("templates/haikute_page.html", 'r') as infile:
-#             body = infile.read()
-#         status = "200 OK"
-#     except NameError:
-#         status = "404 Not Found"
-#         body = "<h1>Not Found</h1>"
-#     except Exception:
-#         status = "500 Internal Server Error"
-#         body = "<h1>Internal Server Error</h1>"
-#     finally:
-#         headers.append(('Content-length', str(len(body))))
-#         start_response(status, headers)
-#         return [body]
+haistorageadd = Queue()
 
 
 def model_app(environ, start_response):
@@ -38,6 +19,11 @@ def model_app(environ, start_response):
             headers = [("Content-type", "application/json")]
             body = json.dumps(generate_haiku())
         elif path == '/api/haiqueue':
+            while True:
+                try:
+                    haistorage.appendleft(haistorageadd.get_nowait())
+                except:
+                    break
             headers = [("Content-type", "application/json")]
             body = json.dumps(get_haiku_list())
         else:
@@ -56,8 +42,9 @@ def model_app(environ, start_response):
 
 
 def generate_haiku():
-    response = str(Haiku())
-    haistorage.appendleft(response)
+    hk = str(Haiku())
+    response = hk.replace('\n', '<br>')
+    haistorageadd.put_nowait(response)
     return {'haiku': response}
 
 
