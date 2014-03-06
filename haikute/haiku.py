@@ -11,7 +11,6 @@ class Haiku(object):
             phrases = random.choice(paradigms)
             for p in phrases:
                 line = random.choice(phrase_dict[p])
-                print line
                 self.string_line = ''
                 prev = ''
                 for w in line:
