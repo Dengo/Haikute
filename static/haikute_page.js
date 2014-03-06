@@ -7,18 +7,16 @@ $(document).ready(function () {
             //data: 'Please remit haiku post haste',
             dataType: 'json',
             success: function(response) {
-                // console.log("The haiku request succeeded");
                 haiku.remove();
                 var hk = $("<p></p>");
-                hk.append(response.haiku);
+                hk.append(response.getString("haiku"));
                 $('#current-haiku').prepend(hk);
             },
             error: function(request, errorType, errorMessage) {
-                // haiku.remove();
-                // var hk = $("<p></p>");
-                // hk.append("No haiku fetched!");
-                // $('#current-haiku').prepend(hk);
-                console.log("The haiku request failed");
+                haiku.remove();
+                var hk = $("<p></p>");
+                hk.append("No haiku fetched!");
+                $('#current-haiku').prepend(hk);
             },
         });
     });
@@ -32,24 +30,19 @@ $(document).ready(function () {
             timeout: 10000,
             dataType: 'json',
             success: function(response) {
-                // console.log("The haiqueue request succeeded");
-                console.log(response);
-                var five_haikus = response.haiqueue;
-                console.log(five_haikus);
-                if (five_haikus[0] != $('#prev-haikus').find('li').first()) {
-                    $('#prev-haikus').find('li').remove();
-                    $('#prev-haikus').append($('<li>'+five_haikus[0]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[1]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[2]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[3]+'</li>'));
-                    $('#prev-haikus').append($('<li>'+five_haikus[4]+'</li>'));
+                var five_haikus = response.getJSONArray("haiqueue");
+                if (five_haikus.getString(0) != $('#prev-haikus').find('li').first()) {
+                    $('#prev-haikus').append($('<li>'+five_haikus.getString(0)+'</li>'));
+                    $('#prev-haikus').append($('<li>'+five_haikus.getString(1)+'</li>'));
+                    $('#prev-haikus').append($('<li>'+five_haikus.getString(2)+'</li>'));
+                    $('#prev-haikus').append($('<li>'+five_haikus.getString(3)+'</li>'));
+                    $('#prev-haikus').append($('<li>'+five_haikus.getString(4)+'</li>'));
                 }
-                setTimeout(longPoll, 10000);
+                return longPoll();
             },
             error: function(request, errorType, errorMessage) {
-                // $('#prev-haikus').find('li').remove();
-                // $('#prev-haikus').append($('<li>'+'No previous haikus found!'+'</li>'));
-                console.log("The haiqueue request failed");
+                $('#prev-haikus').find('li').remove();
+                $('#prev-haikus').append($('<li>'+'No previous haikus found!'+'</li>'));
             },
         });
     };
