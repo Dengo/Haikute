@@ -39,8 +39,10 @@ $(document).ready(function () {
                 }
                 // Prepand that many haikus to the front of #prev-haikus
                 for(var i = num_new - 1; i >= 0; i--) {
-                    $('#prev-haikus').prepend($('<p>'+five_haikus[i]+'</p>')).slideDown(500);
-                    prev_haikus.last().remove();
+                    if(five_haikus[i]) {
+                        $('#prev-haikus').hide().prepend($('<p>'+five_haikus[i]+'</p>')).slideDown(600);
+                        prev_haikus.last().remove();
+                    }
                 }
             },
             error: function(request, errorType, errorMessage) {
