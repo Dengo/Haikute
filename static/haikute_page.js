@@ -11,6 +11,7 @@ $(document).ready(function () {
                 hk.append(response.haiku).hide();
                 $('#current-haiku').prepend(hk);
                 hk.fadeIn(800);
+                longPoll();
             },
             error: function(request, errorType, errorMessage) {
                 console.log("The haiku request failed");
