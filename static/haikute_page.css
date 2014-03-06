@@ -1,0 +1,17 @@
+#current-haiku {
+    color:black;
+    font-size:24px;
+}
+#thebutton {
+    cursor:pointer;
+    color:black;
+    background:#339933;
+    font-family:Impact;
+    font-size:16px;
+}
+body {
+    background:#E6E6FA;
+}
+#prev-haikus {
+    color:gray;
+}
