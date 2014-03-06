@@ -21,7 +21,7 @@ def model_app(environ, start_response):
             body = json.dumps(generate_haiku())
         elif path == '/api/haiqueue':
             headers = [("Content-type", "application/json")]
-            body = json.dumps(db_read())
+            body = json.dumps({'haiqueue': list(db_read())})
         else:
             raise NameError
         status = "200 OK"
