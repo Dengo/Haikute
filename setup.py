@@ -23,6 +23,7 @@ setup(
     install_requires=['PyYAML >= 3.10',
                       'argparse >= 1.2.1',
                       'gunicorn >= 18.0',
-                      'nltk==2.0.4'
+                      'nltk==2.0.4',
+                      'lea==1.2',
                       ]
 )
