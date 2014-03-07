@@ -52,6 +52,14 @@ $(document).ready(function () {
         });
     };
 
+    $('.prev-haikus').on('mouseenter', function() {
+        $(this).animate({opacity:'1.0'}, "slow");
+    });
+
+    $('.prev-haikus').on('mouseleave', function() {
+        $(this).animate({opacity:'0.6'}, "slow");
+    });
+
     longPoll();
     setInterval(longPoll, 15000);
 
