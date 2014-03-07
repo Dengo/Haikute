@@ -1,10 +1,9 @@
-from collections import deque
 from gevent.queue import Queue
 from haiku import Haiku
+from sql_int import db_write, db_read
 import json
 
 
-haistorage = deque(maxlen=5)
 haistorageadd = Queue()
 
 
@@ -12,6 +11,8 @@ def model_app(environ, start_response):
     # method = environ.get('REQUEST_METHOD')
     path = environ.get('PATH_INFO', None)
     headers = []
+    if not haistorageadd.empty():
+        db_write(haistorageadd)
     try:
         if path is None:
             raise NameError
@@ -19,13 +20,8 @@ def model_app(environ, start_response):
             headers = [("Content-type", "application/json")]
             body = json.dumps(generate_haiku())
         elif path == '/api/haiqueue':
-            while True:
-                try:
-                    haistorage.appendleft(haistorageadd.get_nowait())
-                except:
-                    break
             headers = [("Content-type", "application/json")]
-            body = json.dumps(get_haiku_list())
+            body = json.dumps({'haiqueue': list(db_read())})
         else:
             raise NameError
         status = "200 OK"
@@ -47,9 +43,6 @@ def generate_haiku():
     haistorageadd.put_nowait(response)
     return {'haiku': response}
 
-
-def get_haiku_list():
-    return {'haiqueue': list(haistorage)}
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
