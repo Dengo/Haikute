@@ -29,19 +29,20 @@ $(document).ready(function () {
             dataType: 'json',
             success: function(response) {
                 var five_haikus = response.haiqueue;
-                var prev_haikus = $('#prev-haikus').find('p');
-                var num_new = 5;
-                // Determine how many new haikus have been passed back
+                var prev_haikus = new Array();
+                //Populate prev_haikus
                 for(var i = 0; i < 5; i++) {
-                    if(five_haikus[i] == prev_haikus.first().html()) {
-                        num_new = i;
-                    }
+                    prev_haikus[i] = $('#haiku'+i).find('p').html();
                 }
-                // Prepand that many haikus to the front of #prev-haikus
-                for(var i = num_new - 1; i >= 0; i--) {
-                    if(five_haikus[i]) {
-                        $('#prev-haikus').hide().prepend($('<p>'+five_haikus[i]+'</p>')).slideDown(600);
-                        prev_haikus.last().remove();
+                new_count = 0;
+                for(var i = 4; i >= 0; i--) {
+                    for(var j = 0; j < 5; j++) {
+                        if(prev_haikus[i] == five_haikus[j] && prev_haikus[i]) {break;}
+                        else if(j == 4) {
+                            $('#haiku'+i).find('p').remove();
+                            $('#haiku'+i).hide().append($('<p>'+five_haikus[new_count]+'</p>')).slideDown(500);
+                            new_count++;
+                        }
                     }
                 }
             },
@@ -50,6 +51,14 @@ $(document).ready(function () {
             },
         });
     };
+
+    $('.prev-haikus').on('mouseenter', function() {
+        $(this).animate({opacity:'1.0'}, "slow");
+    });
+
+    $('.prev-haikus').on('mouseleave', function() {
+        $(this).animate({opacity:'0.6'}, "slow");
+    });
 
     longPoll();
     setInterval(longPoll, 15000);

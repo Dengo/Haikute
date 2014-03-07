@@ -1,17 +1,57 @@
+body {
+    background:#81B0D1;
+}
+#title {
+    height: 70px;
+    color:white;
+    font-family:Helvetica;
+    font-size: 80px;
+    padding-bottom: 0%;
+    text-align:center;
+    padding-bottom: 0%;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+}
 #current-haiku {
     color:black;
-    font-size:24px;
+    font-family:Garamond;
+    font-size:30px;
+    margin:auto;
+    width:45%;
+    text-align:center;
+    background:white;
+    border-radius:15px;
+    padding-top: 2%;
+    padding-bottom: 3%;
+    margin-top: 0;
+    border-top-width: 0;
+    margin-bottom: 20px;
 }
 #thebutton {
     cursor:pointer;
     color:black;
-    background:#339933;
-    font-family:Impact;
-    font-size:16px;
+    font-family:Helvetica;
+    font-size:20px;
+    font-style:bold;
+    background: #2B83D6;
+    padding:5px 10px 5px 10px;
+    text-shadow: 0 -1px 1px #3275bc;
+    border-radius:11px;
+    border:none;
 }
-body {
-    background:#E6E6FA;
+#thebutton:hover {
+    background:#81B0D1;
 }
-#prev-haikus {
-    color:gray;
+.prev-haikus {
+    color:black;
+    opacity:0.6;
+    font-family:Garamond;
+    font-style:italic;
+    text-align:right;
+    width:10%;
+    height:10%;
+    min-width: 250px;
+    min-height: 10px;
+    float: left;
 }
