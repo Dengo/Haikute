@@ -23,8 +23,6 @@ $(document).ready(function () {
         return $.ajax({
             type: 'GET',
             url: '/api/haiqueue',
-            // async: true,
-            // cache: false,
             timeout: 10000,
             dataType: 'json',
             success: function(response) {
